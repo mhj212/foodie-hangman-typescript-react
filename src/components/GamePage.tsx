@@ -74,8 +74,8 @@ const GamePage: React.FC = () => {
 
     const hintFunc = (): void => {
         const toIndex = (_, idx) => idx;
-        const stillBlank = index => state.blanksArray[index] === '-';
-        const correctLetter = index => state.answer[index];
+        const stillBlank = (index: number) => state.blanksArray[index] === '-';
+        const correctLetter = (index: number) => state.answer[index];
 
         const hintLetter = getRandomItemFromArray(
             state.blanksArray
@@ -180,7 +180,7 @@ const GamePage: React.FC = () => {
         }
     }
 
-    const ifWinner = (ifWinnerData): void => {
+    const ifWinner = (ifWinnerData: GamePageState): void => {
         if (isWinner(ifWinnerData)) {
             setState({
                 ...ifWinnerData,
@@ -208,34 +208,31 @@ const GamePage: React.FC = () => {
     }
 
     const renderTitle = (): ReactElement => {
-        return (<h1>Foodie Hangman</h1>);
+        return <h1>Foodie Hangman</h1>
     }
 
     const renderKeyBoardMessage = (): ReactElement => {
         if (isMobileOrTablet(state)) {
             const className = state.hideUseKeyboard ? "hide Btn customSmallerBtn" : "Btn customSmallerBtn";
-            return (<Button id="keyboard-message-btn" className={className} onClick={openKeyboard} text="Click here to open keyboard" />);
-
+            return <Button id="keyboard-message-btn" className={className} onClick={openKeyboard} text="Click here to open keyboard" />
         } else {
             const className = state.hideUseKeyboard ? "hide " : "";
-            return (<div id="keyboard-message" className={className}>Please use the keyboard</div>);
+            return <div id="keyboard-message" className={className}>Please use the keyboard</div>
         }
-
     }
 
     const renderMessages = (): ReactElement => {
-        return (<div id="messages">{state.messagesDivText}</div>);
+        return <div id="messages">{state.messagesDivText}</div>
     }
 
     const renderWord = (): ReactElement => {
-        return (<div id="word">{state.word}</div>);
+        return <div id="word">{state.word}</div>
     }
 
     const renderTriesLeftMessage = (): ReactElement => {
         const message = `You have ${state.tries} tries left`;
         const className = state.hideTries ? 'hide' : '';
-
-        return (<div id="tries" className={className}>{message}</div>);
+        return <div id="tries" className={className}>{message}</div>
     }
 
     const renderIncorrectTriesMessage = (): ReactElement => {
@@ -249,28 +246,21 @@ const GamePage: React.FC = () => {
         );
     }
 
-    const renderBreak = (): ReactElement => {
-        return (<br></br>);
-    }
+    const renderBreak = (): ReactElement => <br />
 
-    const renderButton = (id, className, onClick, text): ReactElement => {
-        return (<Button id={id} className={className} onClick={onClick} text={text} />);
-    }
+    const renderButton = (id: string, className: string, onClick: () => void, text: string): ReactElement => <Button id={id} className={className} onClick={onClick} text={text} />
 
-    const renderHangmanDrawing = (): ReactElement => {
-        return (<HangmanDrawing tries={state.tries} />);
-    }
+    const renderHangmanDrawing = (): ReactElement => <HangmanDrawing tries={state.tries} />
 
     const renderHiddenInputForMobileAndTabletKeyboard = (): ReactElement => {
         if (isMobileOrTablet(state)) {
             return (<input id="hidden-input" type="text"></input>);
         }
-
     }
 
-    const startButtonClassName = state.hideStartGameButton ? "Btn hide" : "Btn";
-    const giveUpButtonClassName = state.hideGiveUpButton ? "Btn hide" : "Btn";
-    const hintButtonClassName = state.hideHintButton ? "Btn hide" : "Btn";
+    const startButtonClassName: string = state.hideStartGameButton ? "Btn hide" : "Btn";
+    const giveUpButtonClassName: string = state.hideGiveUpButton ? "Btn hide" : "Btn";
+    const hintButtonClassName: string = state.hideHintButton ? "Btn hide" : "Btn";
 
     return (
         <div id="container">
@@ -288,32 +278,28 @@ const GamePage: React.FC = () => {
                 {renderButton("giveupbutton", giveUpButtonClassName, giveUp, "Give Up")}
                 {renderButton("hintbutton", hintButtonClassName, hintFunc, "Hint")}
                 {renderHangmanDrawing()}
-
             </div>
         </div>
-
-
     );
 }
 
 export default GamePage;
 
-const incorrectLetter = state => letter => state.answer.indexOf(letter) === -1;
+const incorrectLetter = (state: GamePageState) => (letter: string): boolean => state.answer.indexOf(letter) === -1;
 
-const calculateIncorrectLettersFromState = state => {
-    return state.guessedLetters.filter(incorrectLetter(state));
-};
+const calculateIncorrectLettersFromState = (state: GamePageState): string[] => state.guessedLetters.filter(incorrectLetter(state))
 
-const isWinner = state => state.answer === state.blanksArray.join('');
+const isWinner = (state: GamePageState): boolean => state.answer === state.blanksArray.join('');
 
-const alreadyGuessedLetter = (state, guess) => state.guessedLetters.indexOf(guess) !== -1;
+const alreadyGuessedLetter = (state: GamePageState, guess: string): boolean => state.guessedLetters.indexOf(guess) !== -1;
 
-const isIncorrectGuess = (state, guess) => incorrectLetter(state)(guess);
+const isIncorrectGuess = (state: GamePageState, guess: string): boolean => incorrectLetter(state)(guess);
 
-const onLastTry = state => state.tries === 1;
+const onLastTry = (state: GamePageState): boolean => state.tries === 1;
 
-const finishedGameFromHint = state => state.answer === state.blanksArray.join('') || state.tries === 0;
+const finishedGameFromHint = (state: GamePageState): boolean => state.answer === state.blanksArray.join('') || state.tries === 0;
 
-const getRandomItemFromArray = array => array[Math.floor(Math.random() * array.length)];
+const getRandomItemFromArray = (array: string[]): string => array[Math.floor(Math.random() * array.length)];
 
-const isMobileOrTablet = state => state.isMobileOrTablet;
+
+const isMobileOrTablet = (state: GamePageState): string => state.isMobileOrTablet;
