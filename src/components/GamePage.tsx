@@ -301,5 +301,4 @@ const finishedGameFromHint = (state: GamePageState): boolean => state.answer ===
 
 const getRandomItemFromArray = (array: string[]): string => array[Math.floor(Math.random() * array.length)];
 
-
 const isMobileOrTablet = (state: GamePageState): string => state.isMobileOrTablet;
