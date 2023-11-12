@@ -1,4 +1,3 @@
-
 const DEFAULT_WORDS = ["cheese", "tacos", "burrito", "carnitas", "chocolate", "rigatoni", "souffle", "coffee", "cappuccino", "ravioli", "tortellini", "eggplant", "tomato", "cherry", "apple", "orange", "carrot", "tiramisu", "strawberry", "mango", "clementine", "sushi", "noodles", "almond", "cashew", "walnut", 'breakfast', 'lunch', 'dinner', 'cookie', 'scone', 'muffin', 'babka', 'doughnut', 'bacon'];
 
 export const DEFAULT_INITIAL_STATE = {
@@ -17,7 +16,6 @@ export const DEFAULT_INITIAL_STATE = {
     word: '',
     hideYesMobileTabletButton: false,
     hideNoMobileTabletButton: false,
-    isMobileOrTablet: window.WURFL.is_mobile,
     words: DEFAULT_WORDS,
     hintActive: false
 }

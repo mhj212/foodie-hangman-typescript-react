@@ -34,7 +34,10 @@ type GamePageState = {
 }
 
 const GamePage: React.FC = () => {
-    const [state, setState] = useState<GamePageState>(DEFAULT_INITIAL_STATE);
+    const [state, setState] = useState<GamePageState>({
+        ...DEFAULT_INITIAL_STATE, 
+        isMobileOrTablet: window.WURFL.is_mobile // putting this here to capture WURFL on line 7 to 13
+    });
 
     useEffect(() => {
         document.addEventListener("keydown", keyDownEvent, false);
